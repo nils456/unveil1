@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+                    <h3 class="display-5">Ready to Unveil? </h3>
+										{% if form.errors %}
+								        <p>Your username and password didn't match.Please try again!</p>
+								    {% endif %}						<!-- <hr class="my-4"> -->
+										<div class="container">
+										    <div class="jumbotron">
+										      <h1>Please Login</h1>
+
+										        <form method="post" action="{% url 'login' %}">
+										          {% csrf_token %}
+										          {# A more "HTML" way of creating the login form#}
+										          <label for="username">Username :</label>
+										          <input type="text" name="username" placeholder="Username">
+
+										          <label for="password">Password :</label>
+										          <input type="password" name="password">
+
+										          <input type="submit" name="" value="Login">
+										    </div>
+										  </div>
+												<div class="form-group">
+                            <a href="#" class="btnForgetPwd" value="Login">Forgot Password?</a>
+                        </div>
+								    </form>
+                </div>
+            </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+      <form method="POST">
+        {%csrf_token%}
+        <img src="{% static "apptwo\images\DSCN0312.jpg" %}" width = "1000" height="400">
+        <input id="mysearch2" type="search" placeholder="search">
+        <button type="submit">Search</button>
+      </form>
+          {% endblock %}

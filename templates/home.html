@@ -1,0 +1,257 @@
+
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <div class="bg">
+      	<div class="heading">
+  				<h1 class="display-5 header">Stunning stock photos. <span class="power">  Powered by Users.</span> </h1>
+  				<!-- <h1 class="lead">Open-source for stunning stock photography, vectors and more. </h1> -->
+          <!-- <h2 class="lead">Well, when I say free. I stand by it. No T&C. </h2> -->
+  				<!-- <button type="button" name="button" class="btn btn-outline-light btn-large">View Demo</button> -->
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+          <div class="container">
+    <div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8">
+              <form  id="myform" method="POST" >
+                  {% csrf_token %}
+                  <div class="card-body row no-gutters align-items-center">
+                      <div class="col-auto">
+                          <i class="fas fa-search h4 text-body icon"></i>
+                      </div>
+                      <div class="col">
+                          <input id="keywords"  name="keywords" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                      </div>
+                      <p></p>
+                      <div class="col-auto align-items-center">
+                          <button class="btn btn-lg btn-success" id="srch" onclick="setType()" > Search </button>
+                      </div>
+                      <br></br>
+                       <div class="col">
+                        <!--  <input id="keywords"  name="keywords" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords"> -->
+                          <select id="category" name="category" size="6">
+                            <option value="Nature">Nature</option>
+                            <option value="Portraits">Portraits</option>
+                            <option value="Scenery">Scenery</option>
+                            <option value="Abstracts">Abstracts</option>
+                            <option value="Food">Food</option>
+                            <option value="Religion">Religion</option>
+                          </select>
+                          <input id="contype" name="contype" type="hidden">
+                      </div>
+                      <div class="container-fluid padding">
+                      <div class="row row-eq-height">
+                         {% if content_records %}
+                            {% for cont in content_records %}
+                               <div class="column align-items-center">
+                                {% if user.is_authenticated %}
+                                    {% if cont.type == "D" %}
+                                       <a id="dwnld" onclick="clicklnk({{cont.id}})" href="{{cont.filename.url}}" download="{{cont.filename.url}}"><video width="320" height="240" controls>
+                                       <source src={{cont.filename_url}} type="video/mp4">
+                                       </video>
+                                    {% else %}
+                                         <a id="dwnld" onclick="clicklnk({{cont.id}})" href="{{cont.filename.url}}" download="{{cont.filename.url}}"><img src={{cont.filename_url}} width = "200" height="200">
+                                    {% endif %}
+                                {% else %}
+                                    {% if cont.type == "D" %}
+                                        <video src={{cont.filename_url}} width = "200" height="200">
+                                    {% else %}
+                                        <img src={{cont.filename_url}} width = "200" height="200">
+                                    {% endif %}
+                                {% endif %}
+                              </div>
+                            {% endfor %}
+                          {% else %}
+                              {% if not firsttime %}
+                                  <p>No Content matching search criteria</p>
+                              {% endif %}
+                        {% endif %}              <!--end of col-->
+                      </div>
+                </div>
+                </div>
+              </form>
+          </div>
+          <!--end of col-->
+      </div>
+</div>
+
+  			</div>
+    </div>
+ {% if not content_records %}
+    <div class="container-fluid padding">
+
+    <div class="row row-eq-height">
+     <div class="column align-items-center">
+       <img src="{% static "img/responsive_1.jpg" %}">
+       <img src="{% static "img/responsive_2.jpg" %}">
+       <img src="{% static "img/responsive_3.jpg" %}">
+    </div>
+
+      <div class="column align-items-center">
+        <img src="{% static "img/responsive_4.jpg" %}">
+        <img src="{% static "img/responsive_5.jpg" %}">
+        <img src="{% static "img/responsive_6.jpg" %}">
+      </div>
+
+     <div class="column align-items-center">
+       <img src="{% static "img/responsive_7.jpg" %}">
+       <img src="{% static "img/responsive_8.jpg" %}">
+       <img src="{% static "img/responsive_9.jpg" %}">
+     </div>
+
+       <div class="column align-items-center">
+         <img src="{% static "img/responsive_10.jpg" %}">
+         <img src="{% static "img/responsive_11.jpg" %}">
+         <img src="{% static "img/responsive_12.jpg" %}">
+       </div>
+
+    </div>
+  </div>
+
+<div class="container-fluid padding">
+  <div class="row text-center">
+    <div class="col-12">
+          <button class="btn btn-lg btn-info " type="submit"> Discover </button>
+    </div>
+
+  </div>
+  </div>
+
+
+
+<!--- Welcome Section -->
+    <hr class="my-4">
+
+    <div class="container-fluid padding">
+    	<div class="row welcome text-center">
+    		<div class="col-12">
+    			<h1 class="display-4">By the users. For the users.</h1>
+    		</div>
+    		<hr class="my-4">
+
+    		<div class="col-12">
+    			<p class="lead">
+    			UNVEIL endeavours to serve as a platform for sharing beautifully captured images.
+    			That means it's now easier to download and upload stock images with a single click.
+    		 	And at no costs, copyright or royalty, whatsoever.</p>
+    		</div>
+    	</div>
+    </div>
+
+    <!--- Three Column Section -->
+
+    <div class="container-fluid padding lead">
+    <div class="row text-center padding">
+    	<div class="col-xs-12 col-sm-6 col-md-4 ">
+    		<i class="fas fa-camera"></i>
+    		<h3>UPLOAD</h3>
+    		<p ><strong> Contribute visual content, vectors and graphics with other users.</strong> </p>
+    	</div>
+    	<div class="col-xs-12 col-sm-6 col-md-4 ">
+    		<i class="fas fa-search"></i>
+    		<h3>SEARCH</h3>
+    		<p><strong>Perform optimised search from high-resolution eye-catching images.</strong>  </p>
+    	</div>
+    	<div class="col-xs-12 col-sm-6 col-md-4">
+    		<i class="fa fa-download"></i>
+    		<h3>DOWNLOAD</h3>
+    		<p><strong>Download instantly from a global storage of royalty-free photos, videos, vectors and more.</strong></p>
+    	</div>
+    </div>
+    </div>
+    <div class="container-fluid padding">
+      <div class="row text-center">
+        <div class="col-12">
+              <a href="sign_up.html" class="btn btn-success btn-lg">Sign Up!</a>
+        </div>
+      </div>
+      </div>
+      <section id="connect">
+        <div class="container-fluid padding connect">
+        	<div class="row text-center padding">
+        		<div class="col-12">
+              	<hr class="my-4">
+                <br>
+        			<h1 class="display-5">Connect with Team Unveil</h1>
+        		</div>
+        		<div class="col-12 social padding">
+        			<a href="#"> <i class="fab fa-facebook"></i> </a>
+        			<a href="#"> <i class="fab fa-twitter"></i> </a>
+        			<a href="#"> <i class="fab fa-instagram"></i> </a>
+        			<a href="#"> <i class="fab fa-google-plus-g"></i> </a>
+        			<a href="#"> <i class="fab fa-youtube"></i> </a>
+        		</div>
+        	</div>
+        </div>
+      </section>
+      <!--- Footer -->
+      <footer>
+      	<div class="container-fluid padding">
+      		<div class="row text-center">
+      			<div class="col-md-4">
+      				<img src="{% static "img/photography2.jpg" %}" alt="">
+      				<hr class="light">
+      				<p>555-555-5555</p>
+      				<p>mail@gmail.com</p>
+      				<p>100 Fortune Enclave</p>
+      				<p>Street City</p>
+      			</div>
+      			<div class="col-md-4">
+      				<hr class="light">
+      				<p>Our Hours</p>
+      				<hr class="light">
+      				<p>mail@gmail.com</p>
+      				<p>100 Fortune Enclave</p>
+      				<p>Street City</p>
+      			</div>
+      			<div class="col-md-4">
+      				<hr class="light">
+      				<p>Service Area</p>
+      				<hr class="light">
+      				<p>City State 0000</p>
+      				<p>City State 0000</p>
+      				<p>City State 0000</p>
+      			</div>
+      			<div class="col-12">
+      			<hr class="light">
+      			<h3 class="lead">&copy; Esther Saijarani, Tanishka Marrott, Sneha Prabhu</h3>
+      			</div>
+      		</div>
+      	</div>
+      </footer>
+{% endif %}
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+   function setType() {
+    myform.contype.value = typ;
+    if (myform.contype == "") {
+       myform.contype.value = "P";
+    }
+   myform.submit();
+   return true; // return false to cancel form action
+}
+
+    function clicklnk(id1) {
+
+
+        //< GET AJAX request
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'update_download_count' %}",
+            data: {"id1": id1},
+            success: function (response) {
+    // if not valid content
+
+    if(!response["valid"]){
+          alert("Download count not updated");
+      }
+},
+error: function (response) {
+    console.log(response)
+}
+          })
+
+        }
+</script >
+
+{% endblock javascript %}

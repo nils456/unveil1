@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Django Level Two</title>
+
+  </head>
+  <body>
+
+    <h1>Here are your User records:</h1>
+    <div class="djangtwo">
+      {% if usr_records %}
+            {% for usr in usr_records %}
+              <ol>
+
+                 User Info
+                <ul>First Name : {{usr.firstname}}</ul>
+                <ul>Last Name : {{usr.lastname}}</ul>
+                <ul>Email ID : {{usr.emailid}}</ul>
+              </ol>
+            {% endfor %}
+
+      {% else %}
+        <p>No User Records. Table Not Created.</p>
+      {% endif %}
+    </div>
+
+  </body>
+</html>

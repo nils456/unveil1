@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+                    <h3 class="display-5">Get. Set. Unveil.</h3>
+ 										<!-- <hr class="my-4"> -->
+                    <form method="POST">
+                    {% csrf_token %}
+                      {% if not registered %}
+                        {{ user_form.as_p }}
+                        {{ cell_form.as_p }}
+                        <input type="submit" class='btn1' value="Submit">
+                      {% else %}
+                         <h3 class="display-5"> User already registered </h3>
+                      {% endif %}  
+                     </form>
+{% endblock %}
